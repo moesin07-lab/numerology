@@ -1,0 +1,516 @@
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  BookOpen,
+  Heart,
+  Sparkles,
+  CalendarDays,
+  Star,
+  Building2,
+  Compass,
+  Share2,
+  Download,
+  Anchor,
+  Brain,
+  Flower2,
+  Gem,
+  LayoutGrid,
+  LucideIcon,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+
+// ---- Data (customize anytime) ----
+const profile = {
+  name: "Moe Myint Kyal Sin",
+  tagline: "Master Builder with a Healer’s Heart",
+  palette: {
+    // Golden sunflower vibes 🌻
+    primary: "#F4C847",
+    primaryText: "#1a1a1a",
+    accent: "#0F172A",
+    soft: "#FFF7DF",
+  },
+  socials: {
+    instagram: "https://instagram.com/oneandonlymoe",
+    podcast: "https://spotify.link/FI9aEZkSyXb",
+  },
+};
+
+const core = {
+  lifePath: "22/4 – Master Builder",
+  expression: "7 – The Seeker / Analyst",
+  soulUrge: "6 – The Nurturer / Healer",
+  personality: "1 – The Pioneer",
+  birthday: "7 – Intuitive Thinker",
+  personalYear: {
+    year: 2025,
+    number: 9,
+    theme: "Completion, release, integration",
+  },
+};
+
+const strengths = [
+  {
+    icon: Building2,
+    title: "Vision → Structure",
+    text:
+      "22/4 blends big-picture vision with practical systems. You’re built to design organizations, programs, and movements that actually work.",
+  },
+  {
+    icon: Brain,
+    title: "Analytical Intuition",
+    text:
+      "Expression 7 reads patterns beneath the surface. You pair research rigor with spiritual insight.",
+  },
+  {
+    icon: Heart,
+    title: "Healer’s Heart",
+    text:
+      "Soul Urge 6 radiates warmth, care, and harmony. You create safe spaces for growth.",
+  },
+  {
+    icon: Star,
+    title: "Independent Spark",
+    text:
+      "Personality 1 leads with originality and courage. You initiate—others follow.",
+  },
+];
+
+const challenges = [
+  {
+    icon: Anchor,
+    title: "Perfection & Pressure",
+    text:
+      "22/4 can carry heavy responsibility. Progress beats perfection—ship, iterate, refine.",
+  },
+  {
+    icon: Flower2,
+    title: "Emotional Overgiving",
+    text:
+      "Soul Urge 6 wants to help everyone. Practice loving boundaries and reciprocal energy.",
+  },
+  {
+    icon: Compass,
+    title: "Solitude → Isolation",
+    text:
+      "7 needs retreats to recharge, but don’t disappear. Share the inner world you polish in private.",
+  },
+];
+
+const roadmap = [
+  {
+    year: 2025,
+    number: 9,
+    label: "Closure & Healing",
+    notes: [
+      "Finish long arcs; forgive; declutter",
+      "Wrap projects; release outdated roles",
+    ],
+  },
+  {
+    year: 2026,
+    number: 1,
+    label: "Rebirth & Leadership",
+    notes: ["Launch the new you", "Bold career pivots, brand refresh"],
+  },
+  {
+    year: 2027,
+    number: 2,
+    label: "Partnerships & Patience",
+    notes: ["Alliances, romance growth", "Build quietly behind the scenes"],
+  },
+  {
+    year: 2028,
+    number: 3,
+    label: "Expression & Joy",
+    notes: ["Podcast/content expansion", "Teaching, speaking, media"],
+  },
+  {
+    year: 2029,
+    number: 4,
+    label: "Structure & Discipline",
+    notes: ["Systems, savings, stamina", "Ops, PM, foundations"],
+  },
+  {
+    year: 2030,
+    number: 5,
+    label: "Freedom & Change",
+    notes: ["Travel, reinvention", "New markets & formats"],
+  },
+];
+
+const pinnacles = [
+  {
+    range: "0–34",
+    number: 9,
+    challenge: 6,
+    theme: "Humanitarian healing; boundaries in love & family",
+  },
+  {
+    range: "35–43",
+    number: 3,
+    challenge: 3,
+    theme: "Creative visibility; speak vulnerably, often",
+  },
+  {
+    range: "44–52",
+    number: 3,
+    challenge: 3,
+    theme: "Global platform; joy as pedagogy",
+  },
+  {
+    range: "53+",
+    number: 8,
+    challenge: 0,
+    theme: "Legacy, power, stewardship; ethics at scale",
+  },
+];
+
+const loveNotes = [
+  "Your love isn’t meant to be proven by struggle. Choose reciprocity over potential.",
+  "Detachment with compassion: help without carrying.",
+  "Share the heart you protect—your truth attracts equals.",
+];
+
+// ---- Decorative Components ----
+const GradientText = ({ children }: { children: React.ReactNode }) => (
+  <span className="bg-gradient-to-r from-amber-500 via-yellow-400 to-emerald-500 bg-clip-text text-transparent">
+    {children}
+  </span>
+);
+
+const AnimatedBlobs = () => (
+  <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+    <motion.div
+      initial={{ opacity: 0.35, scale: 0.9 }}
+      animate={{ opacity: 0.6, scale: 1 }}
+      transition={{ duration: 6, repeat: Infinity, repeatType: "reverse" }}
+      className="absolute -top-32 -left-24 h-96 w-96 rounded-full blur-3xl"
+      style={{ background: "radial-gradient(circle at 30% 30%, #ffe082, transparent 60%)" }}
+    />
+    <motion.div
+      initial={{ opacity: 0.3, x: 0 }}
+      animate={{ opacity: 0.5, x: 20 }}
+      transition={{ duration: 7, repeat: Infinity, repeatType: "reverse" }}
+      className="absolute -bottom-32 -right-20 h-[28rem] w-[28rem] rounded-full blur-3xl"
+      style={{ background: "radial-gradient(circle at 70% 70%, #c7f9cc, transparent 60%)" }}
+    />
+    <motion.div
+      initial={{ opacity: 0.25, y: 0 }}
+      animate={{ opacity: 0.45, y: -20 }}
+      transition={{ duration: 8, repeat: Infinity, repeatType: "reverse" }}
+      className="absolute top-1/3 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full blur-3xl"
+      style={{ background: "radial-gradient(circle at 50% 50%, #b3e5fc, transparent 60%)" }}
+    />
+  </div>
+);
+
+const Marquee = ({ items }: { items: string[] }) => (
+  <div className="relative mt-6 overflow-hidden rounded-xl border border-black/5 bg-white/60 py-2">
+    <div className="animate-[marquee_18s_linear_infinite] whitespace-nowrap [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+      {items.concat(items).map((t, i) => (
+        <span key={i} className="mx-6 inline-flex items-center text-sm text-slate-700">
+          ✧ {t}
+        </span>
+      ))}
+    </div>
+    <style>{`@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }`}</style>
+  </div>
+);
+
+// ---- UI Helpers ----
+const Chip = ({ label }: { label: string }) => (
+  <span className="inline-flex items-center rounded-full border border-black/10 bg-white/80 px-3 py-1 text-sm font-medium text-slate-800 shadow-sm backdrop-blur">
+    {label}
+  </span>
+);
+
+const SectionTitle = ({ icon: Icon, title, subtitle }: { icon: LucideIcon; title: string; subtitle?: string }) => (
+  <div className="flex items-start gap-3">
+    <div className="mt-1"><Icon className="h-5 w-5" /></div>
+    <div>
+      <h3 className="text-lg font-semibold tracking-tight">{title}</h3>
+      {subtitle && <p className="text-sm text-slate-600">{subtitle}</p>}
+    </div>
+  </div>
+);
+
+// ---- Page ----
+export default function NumerologySite() {
+  return (
+    <div
+      className="relative min-h-screen text-slate-900"
+      style={{
+        background:
+          `radial-gradient(1200px 600px at 10% -10%, ${profile.palette.soft}, transparent 60%), radial-gradient(1000px 500px at 90% 0%, #fff6cc, transparent 55%), linear-gradient(180deg, #ffffff, #fbf8ef)`,
+      }}
+    >
+      <AnimatedBlobs />
+
+      {/* Header */}
+      <header className="sticky top-0 z-40 border-b border-black/5 bg-white/70 backdrop-blur">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+          <div className="flex items-center gap-3">
+            <div className="h-8 w-8 rounded-xl" style={{ background: profile.palette.primary }} />
+            <div className="leading-tight">
+              <h1 className="text-base font-bold">{profile.name}</h1>
+              <p className="text-xs text-slate-600">{profile.tagline}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <a href={profile.socials.instagram} target="_blank" className="text-sm underline-offset-4 hover:underline">Instagram</a>
+            <a href={profile.socials.podcast} target="_blank" className="text-sm underline-offset-4 hover:underline">Podcast</a>
+            <Button size="sm" onClick={() => window.print()} className="ml-2">
+              <Download className="mr-2 h-4 w-4" /> Save as PDF
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero */}
+      <section className="mx-auto max-w-6xl px-4 pb-8 pt-10">
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+          <div className="grid gap-6 md:grid-cols-2">
+            <div>
+              <h2 className="text-4xl font-black tracking-tight md:text-5xl">
+                <GradientText>Numerology Blueprint</GradientText>
+              </h2>
+              <p className="mt-3 max-w-prose text-slate-700">
+                A clean, modern snapshot of your core codes and the path they outline—rooted in your Life Path 22/4 and guided by your 7–6–1 harmony.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <Chip label={`Life Path: ${core.lifePath}`} />
+                <Chip label={`Expression: ${core.expression}`} />
+                <Chip label={`Soul Urge: ${core.soulUrge}`} />
+                <Chip label={`Personality: ${core.personality}`} />
+                <Chip label={`Birthday: ${core.birthday}`} />
+                <Chip label={`Personal Year ${core.personalYear.year}: ${core.personalYear.number}`}/>
+              </div>
+              <div className="mt-6 flex flex-wrap gap-2">
+                <Button variant="default" className="shadow" style={{ background: profile.palette.primary, color: profile.palette.primaryText }}>
+                  <Share2 className="mr-2 h-4 w-4" /> Share Reading
+                </Button>
+                <Button variant="outline">
+                  <LayoutGrid className="mr-2 h-4 w-4" /> Explore Sections
+                </Button>
+              </div>
+            </div>
+            <Card className="border-black/10 bg-white/80 shadow-sm backdrop-blur">
+              <CardHeader>
+                <CardTitle>Current Focus</CardTitle>
+                <CardDescription>Personal Year {core.personalYear.year}: {core.personalYear.number} — {core.personalYear.theme}</CardDescription>
+              </CardHeader>
+              <CardContent className="text-sm text-slate-700">
+                This is your spiritual editing phase. Release what’s complete to clear the runway for your Year 1 rebirth in 2026.
+              </CardContent>
+              <CardFooter>
+                <Badge variant="secondary" className="mr-2">Forgiveness</Badge>
+                <Badge variant="secondary" className="mr-2">Decluttering</Badge>
+                <Badge variant="secondary">Integration</Badge>
+              </CardFooter>
+            </Card>
+          </div>
+        </motion.div>
+
+        {/* Creative marquee of your core themes */}
+        <Marquee items={[
+          "Master Builder 22 → Vision into Structure",
+          "Seeker 7 → Truth, Research, Intuition",
+          "Heart 6 → Care, Harmony, Service",
+          "Pioneer 1 → Courage, Initiative",
+          "2026 Year 1 → Rebirth",
+        ]} />
+      </section>
+
+      <Separator className="my-2" />
+
+      {/* Tabs */}
+      <section className="mx-auto max-w-6xl px-4 pb-24 pt-4">
+        <Tabs defaultValue="overview">
+          <TabsList className="flex w-full flex-wrap gap-2 rounded-xl border border-black/5 bg-white/70 p-1 backdrop-blur">
+            <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="strengths">Strengths</TabsTrigger>
+            <TabsTrigger value="challenges">Challenges</TabsTrigger>
+            <TabsTrigger value="roadmap">2025–2030</TabsTrigger>
+            <TabsTrigger value="pinnacles">Pinnacles</TabsTrigger>
+            <TabsTrigger value="love">Love</TabsTrigger>
+            <TabsTrigger value="about">About</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="overview" className="mt-6">
+            <div className="grid gap-4 md:grid-cols-3">
+              <Card className="border-amber-200/60 bg-white/80 shadow-sm backdrop-blur">
+                <CardHeader>
+                  <SectionTitle icon={Sparkles} title="Essence" subtitle="Wisdom → Systems that serve" />
+                </CardHeader>
+                <CardContent className="text-sm text-slate-700">
+                  You’re here to turn insight into institutions: programs, platforms, and communities built with heart and rigor.
+                </CardContent>
+              </Card>
+              <Card className="border-emerald-200/60 bg-white/80 shadow-sm backdrop-blur">
+                <CardHeader>
+                  <SectionTitle icon={Star} title="Superpowers" subtitle="See patterns • Build pathways" />
+                </CardHeader>
+                <CardContent className="text-sm text-slate-700">
+                  <ul className="list-disc pl-5">
+                    <li>Designing structures that uplift</li>
+                    <li>Reading the subtext others miss</li>
+                    <li>Warm leadership with boundaries</li>
+                  </ul>
+                </CardContent>
+              </Card>
+              <Card className="border-sky-200/60 bg-white/80 shadow-sm backdrop-blur">
+                <CardHeader>
+                  <SectionTitle icon={Compass} title="Growth Edge" subtitle="Momentum over perfection" />
+                </CardHeader>
+                <CardContent className="text-sm text-slate-700">
+                  Ship sooner. Speak earlier. Let iteration be your teacher in public.
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="strengths" className="mt-6">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+              {strengths.map((s, i) => (
+                <Card key={i} className="border-black/10 bg-white/80 shadow-sm backdrop-blur">
+                  <CardHeader className="pb-2">
+                    <SectionTitle icon={s.icon} title={s.title} />
+                  </CardHeader>
+                  <CardContent className="text-sm text-slate-700">{s.text}</CardContent>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="challenges" className="mt-6">
+            <div className="grid gap-4 md:grid-cols-3">
+              {challenges.map((c, i) => (
+                <Card key={i} className="border-black/10 bg-white/80 shadow-sm backdrop-blur">
+                  <CardHeader className="pb-2">
+                    <SectionTitle icon={c.icon} title={c.title} />
+                  </CardHeader>
+                  <CardContent className="text-sm text-slate-700">{c.text}</CardContent>
+                  <CardFooter className="pt-0">
+                    <Badge variant="outline">Practice: Consistent, kind boundaries</Badge>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="roadmap" className="mt-6">
+            <div className="space-y-4">
+              {roadmap.map((r) => (
+                <Card key={r.year} className="border-black/10 bg-white/80 shadow-sm backdrop-blur">
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <SectionTitle icon={CalendarDays} title={`${r.year} — Personal Year ${r.number}`} subtitle={r.label} />
+                      <Badge className="text-xs" style={{ background: profile.palette.primary, color: profile.palette.primaryText }}>{r.label}</Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="grid gap-2 md:grid-cols-2">
+                      {r.notes.map((n, i) => (
+                        <li key={i} className="text-sm text-slate-700">• {n}</li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="pinnacles" className="mt-6">
+            <div className="grid gap-4 md:grid-cols-2">
+              {pinnacles.map((p, i) => (
+                <Card key={i} className="border-black/10 bg-white/80 shadow-sm backdrop-blur">
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <SectionTitle icon={Gem} title={`Pinnacle ${i + 1}: ${p.range}`} subtitle={`Number ${p.number} • Challenge ${p.challenge}`} />
+                      <Badge variant="secondary">{p.theme}</Badge>
+                    </div>
+                  </CardHeader>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="love" className="mt-6">
+            <Card className="border-black/10 bg-white/80 shadow-sm backdrop-blur">
+              <CardHeader>
+                <SectionTitle icon={Heart} title="Love Blueprint" subtitle="Reciprocity • Safety • Shared Destiny" />
+              </CardHeader>
+              <CardContent className="grid gap-6 md:grid-cols-3">
+                <div>
+                  <h4 className="font-semibold">Your Pattern</h4>
+                  <p className="mt-2 text-sm text-slate-700">Give deeply, then withdraw when it isn’t matched. New rule: energy must be mutual—early.</p>
+                </div>
+                <div>
+                  <h4 className="font-semibold">Aligned Partner</h4>
+                  <ul className="mt-2 list-disc pl-5 text-sm text-slate-700">
+                    <li>Emotionally consistent and curious</li>
+                    <li>Purpose-driven; respects your solitude</li>
+                    <li>Wants to build a mission, not just a vibe</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-semibold">Practices</h4>
+                  <ul className="mt-2 list-disc pl-5 text-sm text-slate-700">
+                    <li>State standards early; listen for effort</li>
+                    <li>Detach with compassion; no rescuing</li>
+                    <li>Choose slowness over fantasy</li>
+                  </ul>
+                </div>
+              </CardContent>
+              <CardFooter className="flex flex-wrap gap-2">
+                {loveNotes.map((n, i) => (
+                  <Badge key={i} variant="outline">{n}</Badge>
+                ))}
+              </CardFooter>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="about" className="mt-6">
+            <Card className="border-black/10 bg-white/80 shadow-sm backdrop-blur">
+              <CardHeader>
+                <SectionTitle icon={BookOpen} title="How to Use This Map" />
+              </CardHeader>
+              <CardContent className="grid gap-6 md:grid-cols-2">
+                <div>
+                  <h4 className="font-semibold">Daily Alignment</h4>
+                  <ul className="mt-2 list-disc pl-5 text-sm text-slate-700">
+                    <li>Morning: 10-minute silent sit (7), 3 priorities (4)</li>
+                    <li>Work: ship something imperfect daily (1)</li>
+                    <li>Evening: gratitude + small act of service (6)</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-semibold">Quarterly Focus</h4>
+                  <ul className="mt-2 list-disc pl-5 text-sm text-slate-700">
+                    <li>Q1: Systems & boundaries</li>
+                    <li>Q2: Visibility & voice</li>
+                    <li>Q3: Partnerships & process</li>
+                    <li>Q4: Reflection, release, reset</li>
+                  </ul>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <p className="text-sm text-slate-600">This site is a living document. As your cycle shifts, update the data section at the top to instantly refresh the reading.</p>
+              </CardFooter>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-black/5 bg-white/60 py-8 text-center text-sm text-slate-600">
+        Built with love and logic • © {new Date().getFullYear()} {profile.name}
+      </footer>
+    </div>
+  );
+}
